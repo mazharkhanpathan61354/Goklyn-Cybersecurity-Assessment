@@ -1,0 +1,20 @@
+# A simple script to count failed SSH login attempts
+def analyze_logs(filename):
+    failed_count = 0
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                if "Failed password" in line:
+                    failed_count += 1
+        
+        print(f"Analysis Complete.")
+        print(f"Total Suspicious Failed Attempts Detected: {failed_count}")
+        
+        if failed_count > 5:
+            print("[ALERT] High number of failed logins detected!")
+            
+    except FileNotFoundError:
+        print("Error: Log file not found.")
+
+# Running the function on my exported log file
+analyze_logs("auth_export.log")
